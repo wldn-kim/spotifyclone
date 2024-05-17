@@ -19,6 +19,8 @@ const PlayerContextProvider = (props) => {
             minute: 0
         }   
     })
+    const [shuffle, setShuffle] = useState(false);
+    const [loop, setLoop] = useState(false);
 
     const play = () => {
         audioRef.current.play();
@@ -49,11 +51,23 @@ const PlayerContextProvider = (props) => {
             await setTrack(songsData[track.id + 1]);
             await audioRef.current.play();
             setPlayStatus(true);
+        } else if (loop) {
+            await setTrack(songsData[0]);
+            await audioRef.current.play();
+            setPlayStatus(true);
         }
     }
 
+    const toggleShuffle = () => {
+        setShuffle(!shuffle);
+    }
+
+    const toggleLoop = () => {
+        setLoop(!loop);
+    }
+
     const seekSong = async (e) => {
-        audioRef.current.currentTime = ((e.nativeEvent.offsetX / seekBg.current.offsetWidth) * audioRef.current.duration)
+        audioRef.current.currentTime = ((e.nativeEvent.offsetX / seekBg.current.offsetWidth) * audioRef.current.duration);
     }
 
     useEffect(() => {
@@ -72,7 +86,15 @@ const PlayerContextProvider = (props) => {
                 })
             }
         }, 1000);
-    }, [audioRef])
+    }, [audioRef]);
+
+    useEffect(() => {
+        if (shuffle) {
+            const shuffledTracks = [...songsData].sort(() => Math.random() - 0.5);
+            setTrack(shuffledTracks[0]);
+            setPlayStatus(false);
+        }
+    }, [shuffle]);
 
     const contextValue = {
         audioRef,
@@ -84,7 +106,9 @@ const PlayerContextProvider = (props) => {
         play, pause, 
         playWithId,
         previous, next,
-        seekSong
+        seekSong,
+        shuffle, toggleShuffle,
+        loop, toggleLoop
     }
 
     return (

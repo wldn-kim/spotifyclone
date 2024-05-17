@@ -79,14 +79,14 @@ export const albumsData = [
     },
     {   
         id:1,
-        name: "Top 50 US",
+        name: "Top 50 USA",
         image: img9,
         desc:"Your weekly update of the most played tracks",
-        bgColor:"#22543d"
+        bgColor:"#e21d3c"
     },
     {   
         id:2,
-        name: "Trending Daily",
+        name: "Top Songs USA",
         image: img10,
         desc:"Your weekly update of the most played tracks",
         bgColor:"#742a2a"
@@ -100,7 +100,7 @@ export const albumsData = [
     },
     {   
         id:4,
-        name: "Mega Hits,",
+        name: "Mega Hits",
         image: img11,
         desc:"Your weekly update of the most played tracks",
         bgColor:"#234e52"
